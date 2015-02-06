@@ -10,29 +10,33 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-	@IBOutlet weak var detailDescriptionLabel: UILabel!
+	@IBOutlet weak var recordLabel: UILabel!
+	@IBOutlet weak var authorLabel: UILabel!
 
-	var detailItem: AnyObject? {
+	var record: Record? {
 		didSet {
-		    self.configureView()
+		    self.reloadData()
 		}
 	}
 
-	func configureView() {
-		if let detail: AnyObject = self.detailItem {
-		    if let label = self.detailDescriptionLabel {
-		        label.text = detail.description
-		    }
+	func reloadData() {
+		if let r = self.record {
+			if let title = recordLabel {
+				title.text = r.name
+			}
+			if let subtitle = authorLabel {
+				subtitle.text = r.printAuthors()
+			}
 		}
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.configureView()
+		reloadData()
 	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
-}
 
+}

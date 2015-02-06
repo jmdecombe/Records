@@ -14,7 +14,8 @@ import SwiftyJSON
 class MasterViewController: UITableViewController {
 
 	var detailViewController: DetailViewController? = nil
-	var objects = NSMutableArray()
+	var artists = Dictionary<String, Artist>()
+	var records = Array<Record>()
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -28,23 +29,44 @@ class MasterViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.navigationItem.leftBarButtonItem = self.editButtonItem()
-		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-		self.navigationItem.rightBarButtonItem = addButton
-		if let split = self.splitViewController {
-		    let controllers = split.viewControllers
-		    self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
-		}
-
 		Alamofire.request(.GET, "http://private-anon-0f76f54c4-recordsapi.apiary-mock.com/records/").responseJSON() { _, _, data, error in
 			if error == nil {
-				println(data)
 				if let object: AnyObject = data {
 					let json = JSON(object)
+					for artist in json["linked"]["artists"].arrayValue {
+						if let id = artist["id"].string {
+							if let name = artist["name"].string {
+								self.artists[id] = Artist(id, name: name)
+							}
+						}
+					}
+					for record in json["records"].arrayValue {
+						if let id = record["id"].string {
+							if let name = record["name"].string {
+								let r = Record(id, name: name)
+								for (type, link) in record["links"].dictionaryValue {
+									if type == "artist" {
+										if let author = self.artists[link.stringValue] {
+											r.addAuthor(author)
+										}
+									}
+								}
+								self.records.append(r)
+							}
+						}
+					}
+					self.tableView.reloadData()
+				} else {
+					println("The network request succeeded, but returned no data.")
 				}
 			} else {
 				println("A network request error occurred: \(error)")
 			}
+		}
+
+		if let split = self.splitViewController {
+		    let controllers = split.viewControllers
+		    self.detailViewController = controllers[controllers.count - 1].topViewController as? DetailViewController
 		}
 	}
 
@@ -52,20 +74,13 @@ class MasterViewController: UITableViewController {
 		super.didReceiveMemoryWarning()
 	}
 
-	func insertNewObject(sender: AnyObject) {
-		objects.insertObject(NSDate(), atIndex: 0)
-		let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-		self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-	}
-
 	// MARK: - Segues
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == "showDetail" {
+		if segue.identifier == "displayRecord" {
 		    if let indexPath = self.tableView.indexPathForSelectedRow() {
-		        let object = objects[indexPath.row] as NSDate
 		        let controller = (segue.destinationViewController as UINavigationController).topViewController as DetailViewController
-		        controller.detailItem = object
+		        controller.record = records[indexPath.row]
 		        controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
 		        controller.navigationItem.leftItemsSupplementBackButton = true
 		    }
@@ -79,17 +94,23 @@ class MasterViewController: UITableViewController {
 	}
 
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return objects.count
+		return records.count
 	}
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-		let object = objects[indexPath.row] as NSDate
-		cell.textLabel!.text = object.description
+		let cell = tableView.dequeueReusableCellWithIdentifier("Record", forIndexPath: indexPath) as UITableViewCell
+		let record = records[indexPath.row]
+		if let title = cell.textLabel {
+			title.text = record.name
+		}
+		if let subtitle = cell.detailTextLabel {
+			subtitle.text = record.printAuthors()
+		}
 		return cell
 	}
 
 	override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
 		return false
 	}
+
 }
