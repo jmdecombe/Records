@@ -53,5 +53,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>TopRecordsURL</key>
+	<string>http://private-anon-0f76f54c4-recordsapi.apiary-mock.com/records/</string>
 </dict>
 </plist>

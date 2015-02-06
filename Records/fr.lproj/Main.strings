@@ -1,0 +1,33 @@
+
+/* Class = "IBUITableViewController"; title = "Master"; ObjectID = "7bK-jq-Zjz"; */
+"7bK-jq-Zjz.title" = "Maître";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "Arm-wq-HPj"; */
+"Arm-wq-HPj.text" = "Titre";
+
+/* Class = "IBUISplitViewController"; title = "Split View"; ObjectID = "H1p-Uh-vWS"; */
+"H1p-Uh-vWS.title" = "Vue divisée";
+
+/* Class = "IBUIViewController"; title = "Record"; ObjectID = "JEX-9P-axG"; */
+"JEX-9P-axG.title" = "Album";
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "K4Z-ez-tj6"; */
+"K4Z-ez-tj6.text" = "Sous-titre";
+
+/* Class = "IBUINavigationController"; title = "Top Records Navigation"; ObjectID = "RMx-3f-FxP"; */
+"RMx-3f-FxP.title" = "Navigation des meilleurs albums";
+
+/* Class = "IBUILabel"; text = "Author Name(s)"; ObjectID = "T75-nj-47q"; */
+"T75-nj-47q.text" = "Nom(s) d'auteur";
+
+/* Class = "IBUINavigationItem"; title = "Top Records"; ObjectID = "Zdf-7t-Un8"; */
+"Zdf-7t-Un8.title" = "Meilleur albums";
+
+/* Class = "IBUINavigationItem"; title = "Record"; ObjectID = "mOI-FS-AaM"; */
+"mOI-FS-AaM.title" = "Album";
+
+/* Class = "IBUILabel"; text = "Record Name"; ObjectID = "qix-VE-3KI"; */
+"qix-VE-3KI.text" = "Nom d'album";
+
+/* Class = "IBUINavigationController"; title = "Record Navigation"; ObjectID = "vC3-pB-5Vb"; */
+"vC3-pB-5Vb.title" = "Navigation d'album";

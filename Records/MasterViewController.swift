@@ -29,49 +29,81 @@ class MasterViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		Alamofire.request(.GET, "http://private-anon-0f76f54c4-recordsapi.apiary-mock.com/records/").responseJSON() { _, _, data, error in
-			if error == nil {
-				if let object: AnyObject = data {
-					let json = JSON(object)
-					for artist in json["linked"]["artists"].arrayValue {
-						if let id = artist["id"].string {
-							if let name = artist["name"].string {
-								self.artists[id] = Artist(id, name: name)
-							}
-						}
-					}
-					for record in json["records"].arrayValue {
-						if let id = record["id"].string {
-							if let name = record["name"].string {
-								let r = Record(id, name: name)
-								for (type, link) in record["links"].dictionaryValue {
-									if type == "artist" {
-										if let author = self.artists[link.stringValue] {
-											r.addAuthor(author)
-										}
-									}
-								}
-								self.records.append(r)
-							}
-						}
-					}
-					self.tableView.reloadData()
-				} else {
-					println("The network request succeeded, but returned no data.")
-				}
-			} else {
-				println("A network request error occurred: \(error)")
-			}
-		}
-
 		if let split = self.splitViewController {
 		    let controllers = split.viewControllers
 		    self.detailViewController = controllers[controllers.count - 1].topViewController as? DetailViewController
 		}
+
+		reloadData()
 	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
+	}
+
+	// MARK: - Data
+
+	@IBAction func refreshTable() {
+		reloadData()
+	}
+
+	func reloadData() {
+		if let topRecordsURL = NSBundle.mainBundle().objectForInfoDictionaryKey("TopRecordsURL") as? String {
+			Alamofire.request(.GET, topRecordsURL).responseJSON() { _, _, data, error in
+				if error == nil {
+
+					if let object: AnyObject = data {
+						let json = JSON(object)
+						self.artists = Dictionary<String, Artist>()
+						self.records = Array<Record>()
+
+						for artist in json["linked"]["artists"].arrayValue {
+							if let id = artist["id"].string {
+								if let name = artist["name"].string {
+									self.artists[id] = Artist(id, name: name)
+								}
+							}
+						}
+
+						for record in json["records"].arrayValue {
+							if let id = record["id"].string {
+								if let name = record["name"].string {
+									let r = Record(id, name: name)
+									for (type, link) in record["links"].dictionaryValue {
+										if type == "artist" {
+											if let author = self.artists[link.stringValue] {
+												r.addAuthor(author)
+											}
+										}
+									}
+									self.records.append(r)
+								}
+							}
+						}
+						self.tableView.reloadData()
+
+					} else {
+						self.displayAlert(NSLocalizedString("ErrorData", comment: ""))
+					}
+				} else {
+					self.displayAlert(NSLocalizedString("ErrorNetwork", comment: ""))
+				}
+				if let refresh = self.refreshControl {
+					refresh.endRefreshing()
+				}
+			}
+		}
+	}
+
+	func displayAlert (message: String) {
+		let alertController = UIAlertController(title: NSLocalizedString("AlertTitle", comment: ""), message: message, preferredStyle: .Alert)
+		let cancelAction = UIAlertAction(title: NSLocalizedString("CancelTitle", comment: ""), style: .Cancel) { action in
+		}
+		alertController.addAction(cancelAction)
+
+		dispatch_async(dispatch_get_main_queue()) {
+			self.presentViewController(alertController, animated: true, completion: nil)
+		}
 	}
 
 	// MARK: - Segues

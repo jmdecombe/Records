@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Records
+
+  Created by Jean-Michel Decombe on 2/6/15.
+  Copyright (c) 2015 Ludicode. All rights reserved.
+*/
+"AlertTitle" = "ALERT";
+"CancelTitle" = "Cancel";
+"ErrorData" = "The network request succeeded, but returned no data.";
+"ErrorNetwork" = "A network request error occurred. Please activate your network access or try again later, by pulling the list downward.";
