@@ -9,3 +9,4 @@
 "CancelTitle" = "Annuler";
 "ErrorData" = "La requête réseau a fonctionné, mais n'a retourné aucune données.";
 "ErrorNetwork" = "Une erreur de requête réseau s'est produite. Veuillez activer votre accès réseau ou essayez plus tard, en tirant la liste vers le bas.";
+"RefreshTitle" = "Mise à jour des meilleurs albums";

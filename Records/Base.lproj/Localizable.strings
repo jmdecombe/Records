@@ -9,3 +9,4 @@
 "CancelTitle" = "Cancel";
 "ErrorData" = "The network request succeeded, but returned no data.";
 "ErrorNetwork" = "A network request error occurred. Please activate your network access or try again later, by pulling the list downward.";
+"RefreshTitle" = "Top Records Update";

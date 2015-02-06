@@ -34,6 +34,10 @@ class MasterViewController: UITableViewController {
 		    self.detailViewController = controllers[controllers.count - 1].topViewController as? DetailViewController
 		}
 
+		if let refresh = self.refreshControl {
+			refresh.attributedTitle = NSAttributedString(string: NSLocalizedString("RefreshTitle", comment: ""))
+			refresh.beginRefreshing()
+		}
 		reloadData()
 	}
 
