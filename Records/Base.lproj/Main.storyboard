@@ -43,19 +43,39 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iFY-C7-06d" userLabel="Record Cover Frame">
+                                <rect key="frame" x="249" y="163" width="102" height="102"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="102" id="Wms-9q-aoj"/>
+                                    <constraint firstAttribute="height" constant="102" id="iIb-Op-6X6"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mhx-HK-sSS" userLabel="Record Cover">
+                                <rect key="frame" x="250" y="164" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="2Fe-Vv-nTH"/>
+                                    <constraint firstAttribute="height" constant="100" id="hBO-wJ-Xgn"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="mhx-HK-sSS" secondAttribute="centerX" id="BJh-ji-Dr1"/>
                             <constraint firstAttribute="centerY" secondItem="qix-VE-3KI" secondAttribute="centerY" id="M71-Ht-7A8"/>
+                            <constraint firstItem="qix-VE-3KI" firstAttribute="top" secondItem="mhx-HK-sSS" secondAttribute="bottom" constant="16" id="MrO-3m-eC0"/>
+                            <constraint firstItem="mhx-HK-sSS" firstAttribute="centerX" secondItem="iFY-C7-06d" secondAttribute="centerX" id="ObC-GH-rYT"/>
                             <constraint firstItem="qix-VE-3KI" firstAttribute="centerX" secondItem="T75-nj-47q" secondAttribute="centerX" id="PpD-pK-ZFj"/>
                             <constraint firstItem="T75-nj-47q" firstAttribute="top" secondItem="qix-VE-3KI" secondAttribute="bottom" constant="16" id="Slf-dQ-px0"/>
                             <constraint firstAttribute="centerX" secondItem="qix-VE-3KI" secondAttribute="centerX" id="UQL-dZ-Ljb"/>
+                            <constraint firstItem="mhx-HK-sSS" firstAttribute="centerY" secondItem="iFY-C7-06d" secondAttribute="centerY" id="zPx-6q-Smj"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Record" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="authorLabel" destination="T75-nj-47q" id="URm-zq-Z8H"/>
+                        <outlet property="recordCover" destination="mhx-HK-sSS" id="Z3K-mc-dY1"/>
                         <outlet property="recordLabel" destination="qix-VE-3KI" id="F4m-bA-wJR"/>
                     </connections>
                 </viewController>
