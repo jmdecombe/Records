@@ -56,6 +56,6 @@
 	<key>TopRecordsURL</key>
 	<string>http://private-anon-0f76f54c4-recordsapi.apiary-mock.com/records/</string>
 	<key>AppleiTunesStoreSearchURL</key>
-	<string>https://itunes.apple.com/search?term=</string>
+	<string>https://itunes.apple.com/search?media=music&amp;entity=album&amp;limit=1&amp;term=</string>
 </dict>
 </plist>
